@@ -1,0 +1,53 @@
+#pragma once
+
+#include "../src/Utils/StringUtils/StringFormatting.h"
+#include "../src/Utils/UserInputUtils/ClearingInvalidStream.h"
+#include "../src/ErrorHandling/ProductAttributeValidators/Validators.h"
+#include "../ProductAttributeRequirements/RequirementsPrinter.h"
+
+template<typename T>
+T prompt(std::string_view attributeName) {
+	T attribute{};
+
+	std::cout << "Enter product " << attributeName << ": ";
+
+	if constexpr (std::is_same_v<T, std::string>) {
+		// Skip leading whitespace (spaces, tabs, newlines) in the input buffer
+		// to avoid issues when switching to line-oriented input (e.g., std::getline).
+		std::getline(std::cin >> std::ws, attribute);
+	}
+	else if constexpr (std::is_arithmetic_v<T>) {
+		if (!(std::cin >> attribute))
+			UserInputHelpers::clearFlagsAndIgnoreInvalidInput();
+	}
+	else {
+		// Add error logging mechanism here or a static_assert.
+	}
+
+	std::cout << '\n';
+
+	return attribute;
+}
+
+template<typename T, ValidatorConcept<T> AttributeValidator>
+T promptUserForAttribute(
+	RequirementsPrinterConcept<AttributeValidator> auto printer,
+	const AttributeValidator& attributeValidator,
+	std::string_view attributeName) {
+	T attribute{};
+
+	do {
+		// We pass in a validator to get access 
+		// to certain attribute characteristics/requirements,
+		// for example: minStringLength or minPrice
+		printAttributeRequirements<T>(printer, attributeValidator);
+		attribute = prompt<T>(attributeName);
+	} while (!attributeValidator.isValid(attribute));
+
+	if constexpr (std::is_same_v<T, std::string>) {
+		StringHelpers::trimEdgesAndBody(attribute);
+		StringHelpers::toUpperAll(attribute);
+	}
+
+	return attribute;
+}
