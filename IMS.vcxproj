@@ -99,9 +99,13 @@
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.cpp" />
     <ClCompile Include="src\UserInteraction\ProductManagement\ProductSetup.cpp" />
     <ClCompile Include="src\UserInteraction\UserInput\Prompt.cpp" />
+    <ClCompile Include="src\Utils\ConstantVariableUtils\ConstantUtils.cpp" />
+    <ClCompile Include="src\Utils\IOStreamUtils\SettingStreamAlignment.cpp" />
+    <ClCompile Include="src\Utils\ProductTableUtils\ProductUtils.cpp" />
+    <ClCompile Include="src\Utils\ProductTableUtils\TableUtils.cpp" />
     <ClCompile Include="src\Utils\StringUtils\StringFormatting.cpp" />
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\Requirements.cpp" />
-    <ClCompile Include="src\Utils\UserInputUtils\ClearingInvalidStream.cpp" />
+    <ClCompile Include="src\Utils\IOStreamUtils\ClearingInvalidStream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DataAccess\InMemoryStorage.h" />
@@ -112,9 +116,13 @@
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.h" />
     <ClInclude Include="src\UserInteraction\ProductManagement\ProductSetup.h" />
     <ClInclude Include="src\UserInteraction\UserInput\Prompt.h" />
+    <ClInclude Include="src\Utils\ConstantVariableUtils\ConstantUtils.h" />
+    <ClInclude Include="src\Utils\IOStreamUtils\SettingStreamAlignment.h" />
+    <ClInclude Include="src\Utils\ProductTableUtils\ProductUtils.h" />
+    <ClInclude Include="src\Utils\ProductTableUtils\TableUtils.h" />
     <ClInclude Include="src\Utils\StringUtils\StringFormatting.h" />
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\Requirements.h" />
-    <ClInclude Include="src\Utils\UserInputUtils\ClearingInvalidStream.h" />
+    <ClInclude Include="src\Utils\IOStreamUtils\ClearingInvalidStream.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

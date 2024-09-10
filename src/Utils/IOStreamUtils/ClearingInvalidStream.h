@@ -3,6 +3,6 @@
 #include <iostream>
 #include <limits>
 
-namespace UserInputHelpers {
+namespace IOStreamHelpers {
 	void clearFlagsAndIgnoreInvalidInput();
 }

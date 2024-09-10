@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../src/Utils/StringUtils/StringFormatting.h"
-#include "../src/Utils/UserInputUtils/ClearingInvalidStream.h"
+#include "../src/Utils/IOStreamUtils/ClearingInvalidStream.h"
 #include "../src/ErrorHandling/ProductAttributeValidators/Validators.h"
 #include "../ProductAttributeRequirements/RequirementsPrinter.h"
 
@@ -18,7 +18,7 @@ T prompt(std::string_view attributeName) {
 	}
 	else if constexpr (std::is_arithmetic_v<T>) {
 		if (!(std::cin >> attribute))
-			UserInputHelpers::clearFlagsAndIgnoreInvalidInput();
+			IOStreamHelpers::clearFlagsAndIgnoreInvalidInput();
 	}
 	else {
 		// Add error logging mechanism here or a static_assert.

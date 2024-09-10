@@ -39,7 +39,7 @@
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\Requirements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\UserInputUtils\ClearingInvalidStream.cpp">
+    <ClCompile Include="src\Utils\IOStreamUtils\ClearingInvalidStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UserInteraction\UserInput\Prompt.cpp">
@@ -49,6 +49,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UserInteraction\ProductManagement\ProductSetup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\IOStreamUtils\SettingStreamAlignment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\ProductTableUtils\TableUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\ProductTableUtils\ProductUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\ConstantVariableUtils\ConstantUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +86,7 @@
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\Requirements.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\UserInputUtils\ClearingInvalidStream.h">
+    <ClInclude Include="src\Utils\IOStreamUtils\ClearingInvalidStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UserInteraction\UserInput\Prompt.h">
@@ -84,6 +96,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UserInteraction\ProductManagement\ProductSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\IOStreamUtils\SettingStreamAlignment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\ProductTableUtils\TableUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\ConstantVariableUtils\ConstantUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\ProductTableUtils\ProductUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

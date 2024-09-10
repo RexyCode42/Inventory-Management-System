@@ -1,4 +1,3 @@
-// #include "ManagementSystem.h"
 #include <iostream>
 #include <functional>
 #include <vector>
@@ -8,6 +7,10 @@
 #include "Product.h"
 #include "DataAccess/InMemoryStorage.h"
 #include "UserInteraction/ProductManagement/ProductSetup.h"
+#include "Utils/IOStreamUtils/SettingStreamAlignment.h"
+#include "Utils/ConstantVariableUtils/ConstantUtils.h"
+#include "Utils/ProductTableUtils/TableUtils.h"
+#include "Utils/ProductTableUtils/ProductUtils.h"
 
 // IMS = Inventory Management System
 //class IUserInteraction {
@@ -24,6 +27,23 @@
 //	}
 //};
 
+void viewAllProducts(const std::span<const Inventory::Product>& products) {
+    if (products.empty()) {
+        std::cerr << "No products available to display." << '\n';
+        return;
+    }
+
+    constexpr std::array<std::string_view, ConstantHelpers::countOfColumns> tableHeader{
+        "ID", "NAME", "CATEGORY", "PRICE", "STOCK", "INVENTORY VALUE"
+    };
+    const ProductHelpers::StringProducts stringProducts{ ProductHelpers::convertProductsToStringArrays(products) };
+    const TableHelpers::Widths widths{ TableHelpers::calculateColumnWidths(stringProducts, tableHeader) };
+    IOStreamHelpers::setOutputAlignment(std::ios::left);
+    TableHelpers::printTableHeader(tableHeader, widths);
+    TableHelpers::printTableValues(stringProducts, widths);
+    IOStreamHelpers::setOutputAlignment(); // Sets the alignment back to the default state
+}
+
 void addProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
 	const auto lastProductId{ (!inMemoryProductStorage.getProducts().empty()) ?
 		inMemoryProductStorage.getProducts().back().getId() : ""
@@ -35,25 +55,17 @@ void addProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
 
 class InventoryManagementSystemApplication {
 public:
-	void Run() const;
+	void Run();
+
+private:
+    Inventory::InMemoryProductStorage inMemoryProductStorage_{};
 };
 
-void InventoryManagementSystemApplication::Run() const {
-	Inventory::InMemoryProductStorage inMemoryProductStorage{};
-	addProduct(inMemoryProductStorage);
-	addProduct(inMemoryProductStorage);
-	
-	const auto& products{ inMemoryProductStorage.getProducts() };
+void InventoryManagementSystemApplication::Run() {
+	addProduct(inMemoryProductStorage_);
+	addProduct(inMemoryProductStorage_);
 
-	for (const auto& product : products) {
-		std::cout 
-			<< product.getId() << ", "
-			<< product.getName() << ", "
-			<< product.getCategory() << ", "
-			<< product.getPrice() << ", "
-			<< product.getStock() << ", "
-			<< product.calculateInventoryValue() << '\n';
-	}		
+    viewAllProducts(inMemoryProductStorage_.getProducts());
 }
 
 int main() {

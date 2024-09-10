@@ -1,7 +1,7 @@
 #pragma once
 
 #include <tuple>
-#include "../src/Product.h"
+#include <../src/Product.h>
 #include "../UserInput/Prompt.h"
 #include "../ProductAttributeRequirements/Requirements.h"
 
