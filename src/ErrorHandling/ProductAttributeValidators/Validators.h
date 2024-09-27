@@ -22,9 +22,28 @@ protected:
 
 	[[nodiscard]] bool containsLetter(std::string_view str) const;
 
-	[[nodiscard]] bool containsDigit(std::string_view category) const;
+	[[nodiscard]] bool containsLetter(std::string_view str, std::size_t letterFrequency) const;
+
+	[[nodiscard]] bool containsDigit(std::string_view str) const;
+
+	[[nodiscard]] bool containsDigit(std::string_view str, std::size_t digitFrequency) const;
 
 	[[nodiscard]] bool containsSpecialCharacter(std::string_view str) const;
+
+	[[nodiscard]] bool containsNoSpecialCharacters(std::string_view str) const;
+};
+
+class IdValidator : public StringValidator {
+public:
+	[[nodiscard]] bool isValid(std::string_view id) const;
+
+	[[nodiscard]] std::size_t getMinLength() const noexcept;
+
+	[[nodiscard]] std::size_t getMaxLength() const noexcept;
+
+private:
+	static constexpr std::size_t minLength_{ 6 };
+	static constexpr std::size_t maxLength_{ 12 };
 };
 
 class NameValidator : public StringValidator {
@@ -77,4 +96,17 @@ public:
 private:
 	static constexpr int minStock_{ 0 };
 	static constexpr int maxStock_{ 250'000 };
+};
+
+class InventoryValueValidator {
+public:
+	[[nodiscard]] bool isValid(long double inventoryValue) const;
+
+	[[nodiscard]] long double getMinInventoryValue() const noexcept;
+
+	[[nodiscard]] long double getMaxInventoryValue() const noexcept;
+
+private:
+	static constexpr long double minInventoryValue_{ 0 };
+	static constexpr long double maxInventoryValue_{ 125'000'000'000 };
 };

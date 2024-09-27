@@ -50,7 +50,7 @@ void Product::setStock(int stock) {
 	return stock_;
 }
 
-[[nodiscard]] double Product::calculateInventoryValue() const noexcept {
+[[nodiscard]] long double Product::calculateInventoryValue() const noexcept {
 	return unitPrice_ * stock_;
 }
 

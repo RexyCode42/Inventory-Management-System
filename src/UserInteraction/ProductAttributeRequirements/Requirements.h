@@ -3,6 +3,11 @@
 #include <iostream>
 #include <../src/ErrorHandling/ProductAttributeValidators/Validators.h>
 
+class IdRequirementsPrinter {
+public:
+	void print(const IdValidator& nameValidator) const noexcept;
+};
+
 class NameRequirementsPrinter {
 public:
 	void print(const NameValidator& nameValidator) const noexcept;
@@ -21,4 +26,9 @@ public:
 class StockRequirementsPrinter {
 public:
 	void print(const StockValidator& stockValidator) const noexcept;
+};
+
+class InventoryValueRequirementsPrinter {
+public:
+	void print(const InventoryValueValidator& nameValidator) const noexcept;
 };

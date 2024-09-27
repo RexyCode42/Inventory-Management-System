@@ -21,7 +21,7 @@ namespace Inventory {
 		[[nodiscard]] std::string getCategory() const noexcept;
 		[[nodiscard]] double getPrice() const noexcept;
 		[[nodiscard]] int getStock() const noexcept;
-		[[nodiscard]] double calculateInventoryValue() const noexcept;
+		[[nodiscard]] long double calculateInventoryValue() const noexcept;
 
 	private:
 		std::string id_{};

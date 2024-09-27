@@ -4,17 +4,33 @@
 	std::string_view str,
 	const std::size_t& minLength,
 	const std::size_t& maxLength) const {
-	return str.length() >= minLength && str.length() <= maxLength;
+	return (str.length() >= minLength && str.length() <= maxLength);
 }
 
 [[nodiscard]] bool StringValidator::containsLetter(std::string_view str) const {
-	const auto isAlpha{ [](unsigned char ch) -> unsigned char { return std::isalpha(ch); } };
+	const auto isAlpha{ [](unsigned char ch) { return std::isalpha(ch); } };
 	return std::ranges::any_of(str, isAlpha);
 }
 
-[[nodiscard]] bool StringValidator::containsDigit(std::string_view category) const {
-	const auto isDigit{ [](unsigned char ch) -> unsigned char { return std::isdigit(ch); } };
-	return std::ranges::any_of(category, isDigit);
+[[nodiscard]] bool StringValidator::containsLetter(std::string_view str, std::size_t letterFrequency) const {
+	const auto isAlpha{ [](unsigned char ch) -> bool { return std::isalpha(ch); } };
+	// std::int64_t is used to avoid the following compiler error:
+	// "conversion from '__int64' to 'int' requires a narrowing conversion"
+	std::int64_t letterOccurrence{ std::ranges::count_if(str, isAlpha) };
+	return (letterOccurrence % letterFrequency == 0);
+}
+
+[[nodiscard]] bool StringValidator::containsDigit(std::string_view str) const {
+	const auto isDigit{ [](unsigned char ch) { return std::isdigit(ch); } };
+	return std::ranges::any_of(str, isDigit);
+}
+
+[[nodiscard]] bool StringValidator::containsDigit(std::string_view str, std::size_t digitFrequency) const {
+	const auto isDigit{ [](unsigned char ch) { return std::isdigit(ch); } };
+	// std::int64_t is used to avoid the following compiler error:
+	// "conversion from '__int64' to 'int' requires a narrowing conversion"
+	std::int64_t  digitOccurrence{ std::ranges::count_if(str, isDigit) };
+	return (digitOccurrence % digitFrequency == 0);
 }
 
 [[nodiscard]] bool StringValidator::containsSpecialCharacter(std::string_view str) const {
@@ -29,6 +45,29 @@
 	const auto isSpecialCharacter{ [&illegalCharacters](char ch) { return illegalCharacters.contains(ch); } };
 
 	return std::ranges::any_of(str, isSpecialCharacter);
+}
+
+[[nodiscard]] bool StringValidator::containsNoSpecialCharacters(std::string_view str) const {
+	const auto isSpecialCharacter{ [](unsigned char ch) { return std::ispunct(ch); } };
+	return !std::ranges::any_of(str, isSpecialCharacter);
+}
+
+[[nodiscard]] bool IdValidator::isValid(std::string_view id) const {
+	constexpr std::size_t minDigitFrequency{ minLength_ - 2 };
+	constexpr std::size_t minLetterFrequency{ minLength_ - 4 };
+	return
+		StringValidator::hasValidLength(id, minLength_, maxLength_) &&
+		StringValidator::containsDigit(id, minDigitFrequency) &&
+		StringValidator::containsLetter(id, minLetterFrequency) &&
+		StringValidator::containsNoSpecialCharacters(id);
+}
+
+[[nodiscard]] std::size_t IdValidator::getMinLength() const noexcept {
+	return minLength_;
+}
+
+[[nodiscard]] std::size_t IdValidator::getMaxLength() const noexcept {
+	return maxLength_;
 }
 
 [[nodiscard]] bool NameValidator::isValid(std::string_view name) const
@@ -85,4 +124,16 @@
 
 [[nodiscard]] int StockValidator::getMaxStock() const noexcept {
 	return maxStock_;
+}
+
+[[nodiscard]] bool InventoryValueValidator::isValid(long double inventoryValue) const {
+	return (inventoryValue > minInventoryValue_ && inventoryValue < maxInventoryValue_);
+}
+
+[[nodiscard]] long double InventoryValueValidator::getMinInventoryValue() const noexcept {
+	return minInventoryValue_;
+}
+
+[[nodiscard]] long double InventoryValueValidator::getMaxInventoryValue() const noexcept {
+	return maxInventoryValue_;
 }
