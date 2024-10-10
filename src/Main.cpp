@@ -7,7 +7,15 @@
 #include "Product.h"
 #include "DataAccess/InMemoryStorage.h"
 #include "UserInteraction/ProductManagement/ProductSetup.h"
+#include "UserInteraction/ProductManagement/ProductSearch.h"
+// Reintroduce the displayProduct function 
+// once the viewAllProducts function is placed inside its own file
+// #include "UserInteraction/ProductManagement/ProductDisplay.h"
+#include "UserInteraction/UserInput/PromptOptions.h"
+#include "UserInteraction/UserOptions/Options.h"
+#include "UserInteraction/UserOptions/DisplayOptions.h"
 #include "Utils/IOStreamUtils/SettingStreamAlignment.h"
+#include "Utils/IOStreamUtils/ClearingInvalidStream.h"
 #include "Utils/ConstantVariableUtils/ConstantUtils.h"
 #include "Utils/ProductTableUtils/TableUtils.h"
 #include "Utils/ProductTableUtils/ProductUtils.h"
@@ -27,9 +35,18 @@
 //	}
 //};
 
+void addProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
+	const auto lastProductId{ (!inMemoryProductStorage.getProducts().empty()) ?
+		inMemoryProductStorage.getProducts().back().getId() : ""
+	};
+	const auto attributes{ getProductAttributes(lastProductId) };
+	const auto product{ createProduct(attributes) };
+	inMemoryProductStorage.add(product);
+}
+
 void viewAllProducts(const std::span<const Inventory::Product>& products) {
     if (products.empty()) {
-        std::cerr << "No products available to display." << '\n';
+        std::cout << "No products available to display." << '\n';
         return;
     }
 
@@ -44,13 +61,25 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
     IOStreamHelpers::setOutputAlignment(); // Sets the alignment back to the default state
 }
 
-void addProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
-	const auto lastProductId{ (!inMemoryProductStorage.getProducts().empty()) ?
-		inMemoryProductStorage.getProducts().back().getId() : ""
-	};
-	const auto attributes{ getProductAttributes(lastProductId) };
-	const auto product{ createProduct(attributes) };
-	inMemoryProductStorage.add(product);
+void displayProducts(const std::optional<std::vector<Inventory::Product>>& foundProducts) {
+    if (!foundProducts.has_value()) {
+        std::cout << "Product(s) could not be found." << '\n';
+        return;
+    }
+
+
+    viewAllProducts(foundProducts.value());
+}
+
+void searchAndDisplayProducts(const std::span<const Inventory::Product>& products) {
+    if (products.empty()) {
+        std::cout << "No products available to search." << '\n';
+        return;
+    }
+
+    const auto foundProducts{ searchForProducts(products) };
+
+    displayProducts(foundProducts);
 }
 
 class InventoryManagementSystemApplication {
@@ -63,7 +92,9 @@ private:
 
 void InventoryManagementSystemApplication::Run() {
 	addProduct(inMemoryProductStorage_);
-	addProduct(inMemoryProductStorage_);
+	// addProduct(inMemoryProductStorage_);
+
+    searchAndDisplayProducts(inMemoryProductStorage_.getProducts());
 
     viewAllProducts(inMemoryProductStorage_.getProducts());
 }

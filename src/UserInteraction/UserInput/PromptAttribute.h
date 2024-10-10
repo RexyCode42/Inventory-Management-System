@@ -17,11 +17,14 @@ T prompt(std::string_view attributeName) {
 		std::getline(std::cin >> std::ws, attribute);
 	}
 	else if constexpr (std::is_arithmetic_v<T>) {
-		if (!(std::cin >> attribute))
-			IOStreamHelpers::clearFlagsAndIgnoreInvalidInput();
+		std::cin >> attribute;
+		IOStreamHelpers::clearFlagsAndIgnoreInvalidInput();
 	}
 	else {
 		// Add error logging mechanism here or a static_assert.
+		// static_assert(std::is_arithmetic_v<T> || 
+		// std::is_same_v<T, std::string>, 
+		// "T must be either an arithmetic type or std::string");
 	}
 
 	std::cout << '\n';

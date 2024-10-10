@@ -5,7 +5,7 @@
 #include <array>
 #include <span>
 #include <string>
-#include <../src/Product.h>
+#include "../src/Product.h"
 #include "../ConstantVariableUtils/ConstantUtils.h"
 
 namespace ProductHelpers {

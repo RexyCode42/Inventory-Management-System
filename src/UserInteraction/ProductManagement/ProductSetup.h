@@ -2,7 +2,7 @@
 
 #include <tuple>
 #include <../src/Product.h>
-#include "../UserInput/Prompt.h"
+#include "../UserInput/PromptAttribute.h"
 #include "../ProductAttributeRequirements/Requirements.h"
 
 std::tuple<std::string, std::string, std::string, double, int>
