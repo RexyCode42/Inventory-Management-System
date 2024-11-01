@@ -35,12 +35,51 @@
 //	}
 //};
 
+// ===========================================Done=============================================
+
+[[nodiscard]] std::expected<void, std::string> updateProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
+    if (inMemoryProductStorage.getProducts().empty())
+        return std::unexpected("No products available to update.");
+
+    const std::string id{
+            promptUserForAttribute<std::string>(
+                IdRequirementsPrinter{},
+                IdValidator{},
+                "id")
+    };
+
+    const auto foundProductOpt{ inMemoryProductStorage.getProductReferenceById(id) };
+
+    if (!foundProductOpt.has_value())
+        return std::unexpected("Product ID: " + id + " could not be found.");
+
+    constexpr UpdateOption minChoice{ UpdateOption::NAME };
+    constexpr UpdateOption maxChoice{ UpdateOption::ALL_OF_THE_ABOVE };
+
+    const UpdateOption userChoice{
+        promptUserForChoice(
+            UserSelection::displayProductUpdateOptions,
+            minChoice,
+            maxChoice)
+    };
+
+    auto& foundProduct{ foundProductOpt->get() };
+
+    const auto isUpdateSuccessful{ inMemoryProductStorage.promptAndUpdateProduct(userChoice, foundProduct) };
+
+    if (!isUpdateSuccessful.has_value())
+        return std::unexpected(isUpdateSuccessful.error());
+
+    return {}; // Success case
+}
+
 void addProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
-	const auto lastProductId{ (!inMemoryProductStorage.getProducts().empty()) ?
-		inMemoryProductStorage.getProducts().back().getId() : ""
-	};
+    const auto lastProductId{ (!inMemoryProductStorage.getProducts().empty()) ? 
+        inMemoryProductStorage.getProducts().back().getId() : 
+        "" };
 	const auto attributes{ getProductAttributes(lastProductId) };
 	const auto product{ createProduct(attributes) };
+
 	inMemoryProductStorage.add(product);
 }
 
@@ -61,12 +100,11 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
     IOStreamHelpers::setOutputAlignment(); // Sets the alignment back to the default state
 }
 
-void displayProducts(const std::optional<std::vector<Inventory::Product>>& foundProducts) {
+void displayFoundProducts(const std::optional<std::vector<Inventory::Product>>& foundProducts) {
     if (!foundProducts.has_value()) {
         std::cout << "Product(s) could not be found." << '\n';
         return;
     }
-
 
     viewAllProducts(foundProducts.value());
 }
@@ -79,7 +117,7 @@ void searchAndDisplayProducts(const std::span<const Inventory::Product>& product
 
     const auto foundProducts{ searchForProducts(products) };
 
-    displayProducts(foundProducts);
+    displayFoundProducts(foundProducts);
 }
 
 class InventoryManagementSystemApplication {
@@ -91,12 +129,21 @@ private:
 };
 
 void InventoryManagementSystemApplication::Run() {
-	addProduct(inMemoryProductStorage_);
 	// addProduct(inMemoryProductStorage_);
-
-    searchAndDisplayProducts(inMemoryProductStorage_.getProducts());
+	addProduct(inMemoryProductStorage_);
 
     viewAllProducts(inMemoryProductStorage_.getProducts());
+
+    // searchAndDisplayProducts(inMemoryProductStorage_.getProducts());
+
+    if (const auto isUpdated{ updateProduct(inMemoryProductStorage_) };
+        !isUpdated.has_value())
+        std::cout << isUpdated.error() << '\n';
+    else
+        std::cout << "Success" << '\n';
+        
+
+    
 }
 
 int main() {

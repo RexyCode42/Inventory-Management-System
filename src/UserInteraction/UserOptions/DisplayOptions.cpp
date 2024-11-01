@@ -8,3 +8,11 @@ void UserSelection::displayProductSearchOptions() {
     std::cout << "5) Search by Stock" << '\n';
     std::cout << "6) Search by Inventory Value" << '\n';
 }
+
+void UserSelection::displayProductUpdateOptions() {
+    std::cout << "1) Update Name" << '\n';
+    std::cout << "2) Update Category" << '\n';
+    std::cout << "3) Update Price" << '\n';
+    std::cout << "4) Update Stock" << '\n';
+    std::cout << "5) Update All" << '\n';
+}

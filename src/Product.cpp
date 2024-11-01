@@ -10,10 +10,6 @@ Product::Product(const std::string& id, const std::string& name,
 	unitPrice_{ unitPrice },
 	stock_{ stock } {}
 
-void Product::setId(const std::string& id) {
-	id_ = id;
-}
-
 void Product::setName(const std::string& name) {
 	name_ = name;
 }
@@ -27,6 +23,13 @@ void Product::setPrice(double unitPrice) {
 }
 
 void Product::setStock(int stock) {
+	stock_ = stock;
+}
+
+void Product::setAll(const std::string& name, const std::string& category, double unitPrice, int stock) {
+	name_ = name;
+	category_ = category;
+	unitPrice_ = unitPrice;
 	stock_ = stock;
 }
 

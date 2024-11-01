@@ -5,18 +5,35 @@ getProductAttributes(const std::string& lastProductId) {
 	const std::string id{
 		Inventory::IdGenerator{}.generateId(lastProductId)
 	};
+
 	const std::string name{
-		promptUserForAttribute<std::string>(NameRequirementsPrinter{}, NameValidator{}, "name")
+		promptUserForAttribute<std::string>(
+			NameRequirementsPrinter{}, 
+			NameValidator{}, 
+			"name")
 	};
+
 	const std::string category{
-		promptUserForAttribute<std::string>(CategoryRequirementsPrinter{}, CategoryValidator{}, "category")
+		promptUserForAttribute<std::string>(
+			CategoryRequirementsPrinter{}, 
+			CategoryValidator{}, 
+			"category")
 	};
+
 	const double unitPrice{
-		promptUserForAttribute<double>(UnitPriceRequirementsPrinter{}, UnitPriceValidator{}, "price")
+		promptUserForAttribute<double>(
+			UnitPriceRequirementsPrinter{}, 
+			UnitPriceValidator{}, 
+			"price")
 	};
+
 	const int stock{
-		promptUserForAttribute<int>(StockRequirementsPrinter{}, StockValidator{}, "stock")
+		promptUserForAttribute<int>(
+			StockRequirementsPrinter{}, 
+			StockValidator{}, 
+			"stock")
 	};
+
 	return { id, name, category, unitPrice, stock };
 }
 

@@ -1,8 +1,8 @@
 #include "ProductSearch.h"
 
 [[nodiscard]] std::function<bool(const Inventory::Product&)> getProductSearchPredicate() {
-    constexpr SearchOption minChoice{ SearchOption::Id };
-    constexpr SearchOption maxChoice{ SearchOption::InventoryValue };
+    constexpr SearchOption minChoice{ SearchOption::ID };
+    constexpr SearchOption maxChoice{ SearchOption::INVENTORY_VALUE };
 
     const SearchOption userChoice{ promptUserForChoice(
         UserSelection::displayProductSearchOptions,
@@ -13,7 +13,7 @@
     // Using enums for improved clarity and type safety over raw integers
 
     switch (userChoice) {
-    case SearchOption::Id:
+    case SearchOption::ID:
         // Prompt the user to enter an attribute (e.g., ID in this case)
         // Return a lambda that captures the entered value for comparison
         return [id = promptUserForAttribute<std::string>(
@@ -23,7 +23,7 @@
             (const Inventory::Product& product) {
             return product.getId() == id;
             };
-    case SearchOption::Name:
+    case SearchOption::NAME:
         // Prompt for name and return a comparison lambda
         return [name = promptUserForAttribute<std::string>(
             NameRequirementsPrinter{},
@@ -32,7 +32,7 @@
             (const Inventory::Product& product) {
             return product.getName() == name;
             };
-    case SearchOption::Category:
+    case SearchOption::CATEGORY:
         // Prompt for category and return a comparison lambda
         return [category = promptUserForAttribute<std::string>(
             CategoryRequirementsPrinter{},
@@ -41,7 +41,7 @@
             (const Inventory::Product& product) {
             return product.getCategory() == category;
             };
-    case SearchOption::Price:
+    case SearchOption::PRICE:
         // Prompt for price and return a comparison lambda
         return [unitPrice = promptUserForAttribute<double>(
             UnitPriceRequirementsPrinter{},
@@ -50,7 +50,7 @@
             (const Inventory::Product& product) {
             return product.getPrice() == unitPrice;
             };
-    case SearchOption::Stock:
+    case SearchOption::STOCK:
         // Prompt for stock and return a comparison lambda
         return [stock = promptUserForAttribute<int>(
             StockRequirementsPrinter{},
@@ -59,7 +59,7 @@
             (const Inventory::Product& product) {
             return product.getStock() == stock;
             };
-    case SearchOption::InventoryValue:
+    case SearchOption::INVENTORY_VALUE:
         // Prompt for inventory value and return a comparison lambda
         return [inventoryValue = promptUserForAttribute<long double>(
             InventoryValueRequirementsPrinter{},

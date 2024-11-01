@@ -10,11 +10,11 @@ namespace Inventory {
 		Product(const std::string& id, const std::string& name, 
 			const std::string& category, double unitPrice, int stock);
 
-		void setId(const std::string& id);
 		void setName(const std::string& name);
 		void setCategory(const std::string& category);
 		void setPrice(double unitPrice);
 		void setStock(int stock);
+		void setAll(const std::string& name, const std::string& category, double unitPrice, int stock);
 
 		[[nodiscard]] std::string getId() const noexcept;
 		[[nodiscard]] std::string getName() const noexcept;
