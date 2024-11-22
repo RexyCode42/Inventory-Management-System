@@ -14,15 +14,13 @@ void InMemoryProductStorage::add(const Product& product) {
 	}
 
 	products_.emplace_back(product);
-
-	std::cout << "Product " + name + " successfully added." << "\n\n";
 }
 
-void InMemoryProductStorage::remove(std::string_view productName) {
-	// W.I.P
+void InMemoryProductStorage::remove(const Product& product) {
+	products_.erase(std::ranges::find(products_, product));
 }
 
-[[nodiscard]] std::expected<void, std::string> InMemoryProductStorage::promptAndUpdateProduct(
+[[nodiscard]] std::expected<void, std::string> InMemoryProductStorage::promptAndUpdate(
 	const UpdateOption& userChoice, Product& foundProduct)
 {
 	switch (userChoice) {
@@ -92,11 +90,6 @@ void InMemoryProductStorage::remove(std::string_view productName) {
 	return std::expected<void, std::string>();
 }
 
-[[nodiscard]] bool InMemoryProductStorage::doesProductNameExist(std::string_view name) const {
-	auto isTargetName{ [&name](const Product& product) { return product.getName() == name; } };
-	return std::ranges::any_of(products_, isTargetName);
-}
-
 [[nodiscard]] const std::vector<Product>& InMemoryProductStorage::getProducts() const noexcept {
 	return products_;
 }
@@ -108,6 +101,11 @@ InMemoryProductStorage::getProductReferenceById(std::string_view id) {
 
 	return (foundProduct != std::end(products_)) ? 
 		InMemoryProductStorage::OptionalProductReference(*foundProduct) : std::nullopt;
+}
+
+[[nodiscard]] bool InMemoryProductStorage::doesProductNameExist(std::string_view name) const {
+	auto isTargetName{ [&name](const Product& product) { return product.getName() == name; } };
+	return std::ranges::any_of(products_, isTargetName);
 }
 
 [[nodiscard]] InMemoryProductStorage::ExpectedProductAttributes

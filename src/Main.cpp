@@ -42,10 +42,10 @@
         return std::unexpected("No products available to update.");
 
     const std::string id{
-            promptUserForAttribute<std::string>(
-                IdRequirementsPrinter{},
-                IdValidator{},
-                "id")
+        promptUserForAttribute<std::string>(
+            IdRequirementsPrinter{},
+            IdValidator{},
+            "id")
     };
 
     const auto foundProductOpt{ inMemoryProductStorage.getProductReferenceById(id) };
@@ -65,10 +65,10 @@
 
     auto& foundProduct{ foundProductOpt->get() };
 
-    const auto isUpdateSuccessful{ inMemoryProductStorage.promptAndUpdateProduct(userChoice, foundProduct) };
+    const auto isUpdateSuccessful{ inMemoryProductStorage.promptAndUpdate(userChoice, foundProduct) };
 
     if (!isUpdateSuccessful.has_value())
-        return std::unexpected(isUpdateSuccessful.error());
+        return isUpdateSuccessful;
 
     return {}; // Success case
 }
@@ -92,12 +92,59 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
     constexpr std::array<std::string_view, ConstantHelpers::countOfColumns> tableHeader{
         "ID", "NAME", "CATEGORY", "PRICE", "STOCK", "INVENTORY VALUE"
     };
+
     const ProductHelpers::StringProducts stringProducts{ ProductHelpers::convertProductsToStringArrays(products) };
+
     const TableHelpers::Widths widths{ TableHelpers::calculateColumnWidths(stringProducts, tableHeader) };
+
     IOStreamHelpers::setOutputAlignment(std::ios::left);
+
     TableHelpers::printTableHeader(tableHeader, widths);
+
     TableHelpers::printTableValues(stringProducts, widths);
+
     IOStreamHelpers::setOutputAlignment(); // Sets the alignment back to the default state
+}
+
+[[nodiscard]] std::expected<void, std::string> removeProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
+    if (inMemoryProductStorage.getProducts().empty())
+        return std::unexpected("No products available to remove.");
+
+    const std::string id{
+        promptUserForAttribute<std::string>(
+            IdRequirementsPrinter{},
+            IdValidator{},
+            "id")
+    };
+
+    const auto foundProductOpt{ inMemoryProductStorage.getProductReferenceById(id) };
+
+    if (!foundProductOpt.has_value())
+        return std::unexpected("Product ID: " + id + " could not be found.");
+
+    const auto& product{ foundProductOpt->get() };
+
+    viewAllProducts(std::span{ &product, 1 });
+
+    constexpr DeleteOption minChoice{ DeleteOption::YES };
+    constexpr DeleteOption maxChoice{ DeleteOption::NO };
+
+    const DeleteOption userChoice{
+        promptUserForChoice(
+            UserSelection::displayProductRemoveOptions,
+            minChoice,
+            maxChoice)
+    };
+
+    switch (userChoice) {
+    case DeleteOption::YES:
+        inMemoryProductStorage.remove(product);
+        return {};
+    case DeleteOption::NO:
+        return {};
+    default:
+        throw std::runtime_error("Unexpected delete option chosen.");
+    }
 }
 
 void displayFoundProducts(const std::optional<std::vector<Inventory::Product>>& foundProducts) {
@@ -130,20 +177,20 @@ private:
 
 void InventoryManagementSystemApplication::Run() {
 	// addProduct(inMemoryProductStorage_);
-	addProduct(inMemoryProductStorage_);
-
-    viewAllProducts(inMemoryProductStorage_.getProducts());
+	// addProduct(inMemoryProductStorage_);
 
     // searchAndDisplayProducts(inMemoryProductStorage_.getProducts());
 
-    if (const auto isUpdated{ updateProduct(inMemoryProductStorage_) };
-        !isUpdated.has_value())
-        std::cout << isUpdated.error() << '\n';
+    inMemoryProductStorage_.add({ "0000AA","carrot","food",0.99,30 });
+    inMemoryProductStorage_.add({ "0001AA","apple","food",0.99,30 });
+
+    if (const auto isRemoved{ removeProduct(inMemoryProductStorage_) };
+        !isRemoved.has_value())
+        std::cout << isRemoved.error() << '\n';
     else
         std::cout << "Success" << '\n';
-        
 
-    
+    viewAllProducts(inMemoryProductStorage_.getProducts());
 }
 
 int main() {

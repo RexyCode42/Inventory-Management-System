@@ -16,3 +16,8 @@ enum class UpdateOption : int {
     STOCK,
     ALL_OF_THE_ABOVE
 };
+
+enum class DeleteOption : int {
+    YES = 1,
+    NO
+};

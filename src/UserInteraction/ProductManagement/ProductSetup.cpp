@@ -1,6 +1,6 @@
 #include "ProductSetup.h"
 
-std::tuple<std::string, std::string, std::string, double, int>
+[[nodiscard]] std::tuple<std::string, std::string, std::string, double, int>
 getProductAttributes(const std::string& lastProductId) {
 	const std::string id{
 		Inventory::IdGenerator{}.generateId(lastProductId)
@@ -37,7 +37,7 @@ getProductAttributes(const std::string& lastProductId) {
 	return { id, name, category, unitPrice, stock };
 }
 
-Inventory::Product createProduct(
+[[nodiscard]] Inventory::Product createProduct(
 	const std::tuple<std::string, std::string, std::string, double, int>& attributes) {
 	const auto [id, name, category, unitPrice, stock] {attributes};
 	return Inventory::Product{ id, name, category, unitPrice, stock };

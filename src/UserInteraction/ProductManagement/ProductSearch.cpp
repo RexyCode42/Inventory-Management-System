@@ -94,7 +94,7 @@ searchProductsByAttribute(
     productsFound.shrink_to_fit();
 
     return (!productsFound.empty()) ?
-        std::make_optional(productsFound) : std::nullopt;
+        std::make_optional(std::move(productsFound)) : std::nullopt;
 }
 
 [[nodiscard]] std::optional<std::vector<Inventory::Product>> searchForProducts(const std::span<const Inventory::Product>& products) {

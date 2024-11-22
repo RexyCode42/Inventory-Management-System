@@ -23,6 +23,8 @@ namespace Inventory {
 		[[nodiscard]] int getStock() const noexcept;
 		[[nodiscard]] long double calculateInventoryValue() const noexcept;
 
+		bool operator==(const Product& product) const noexcept;
+
 	private:
 		std::string id_{};
 		std::string name_{};

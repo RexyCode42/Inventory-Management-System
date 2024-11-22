@@ -5,8 +5,8 @@
 #include "../UserInput/PromptAttribute.h"
 #include "../ProductAttributeRequirements/Requirements.h"
 
-std::tuple<std::string, std::string, std::string, double, int>
+[[nodiscard]] std::tuple<std::string, std::string, std::string, double, int>
 getProductAttributes(const std::string& lastProductId);
 
-Inventory::Product createProduct(
+[[nodiscard]] Inventory::Product createProduct(
 	const std::tuple<std::string, std::string, std::string, double, int>& attributes);

@@ -57,6 +57,10 @@ void Product::setAll(const std::string& name, const std::string& category, doubl
 	return unitPrice_ * stock_;
 }
 
+bool Product::operator==(const Product& product) const noexcept {
+	return id_ == product.id_;
+}
+
 [[nodiscard]] std::string IdGenerator::generateId(const std::string& lastProductId) {
 	if (const std::string defaultId{ "0000AA" }; lastProductId.empty())
 		return defaultId;

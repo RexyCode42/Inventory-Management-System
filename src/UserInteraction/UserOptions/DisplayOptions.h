@@ -6,4 +6,6 @@ namespace UserSelection {
     void displayProductSearchOptions();
 
     void displayProductUpdateOptions();
+
+    void displayProductRemoveOptions();
 }

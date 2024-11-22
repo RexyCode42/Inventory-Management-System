@@ -17,17 +17,17 @@ namespace Inventory {
 
         void add(const Product& product);
 
-        void remove(std::string_view productName);
+        void remove(const Product& product);
 
-        [[nodiscard]] std::expected<void, std::string> promptAndUpdateProduct(const UpdateOption& userChoice, Inventory::Product& foundProduct);
-
-        [[nodiscard]] bool doesProductNameExist(std::string_view name) const;
+        [[nodiscard]] std::expected<void, std::string> promptAndUpdate(const UpdateOption& userChoice, Inventory::Product& foundProduct);
 
         [[nodiscard]] const std::vector<Product>& getProducts() const noexcept;
 
         [[nodiscard]] OptionalProductReference getProductReferenceById(std::string_view id);
 
-    private:        
+    private:
+        [[nodiscard]] bool doesProductNameExist(std::string_view name) const;
+
         [[nodiscard]] ExpectedProductAttributes promptUserForUpdatedAttributes() const;
 
         std::vector<Product> products_;

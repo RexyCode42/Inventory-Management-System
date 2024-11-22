@@ -16,3 +16,9 @@ void UserSelection::displayProductUpdateOptions() {
     std::cout << "4) Update Stock" << '\n';
     std::cout << "5) Update All" << '\n';
 }
+
+void UserSelection::displayProductRemoveOptions() {
+    std::cout << "Are you sure you want to remove this product?" << '\n';
+    std::cout << "1) Yes" << '\n';
+    std::cout << "2) No" << '\n';
+}
