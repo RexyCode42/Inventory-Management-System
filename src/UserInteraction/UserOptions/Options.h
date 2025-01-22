@@ -21,3 +21,13 @@ enum class DeleteOption : int {
     YES = 1,
     NO
 };
+
+enum class SaveModeOption : int {
+    SAVE_TO_NEW = 1,
+    SAVE_TO_INTERNAL
+};
+
+enum class FileExtensionOption : int {
+    TXT = 1,
+    CSV
+};

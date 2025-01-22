@@ -90,9 +90,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Algorithms\Join.cpp" />
+    <ClCompile Include="src\DataAccess\FileFormats\Formats.cpp" />
     <ClCompile Include="src\DataAccess\InMemoryStorage.cpp" />
-    <ClCompile Include="src\ErrorHandling.cpp" />
-    <ClCompile Include="src\DataAccess\FileSystem.cpp" />
+    <ClCompile Include="src\DataAccess\File.cpp" />
     <ClCompile Include="src\ErrorHandling\ProductAttributeValidators\Validators.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Product.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="src\UserInteraction\UserOptions\DisplayOptions.cpp" />
     <ClCompile Include="src\UserInteraction\UserOptions\Options.cpp" />
     <ClCompile Include="src\Utils\ConstantVariableUtils\ConstantUtils.cpp" />
+    <ClCompile Include="src\Utils\FileUtils\FileManipulation.cpp" />
     <ClCompile Include="src\Utils\IOStreamUtils\SettingStreamAlignment.cpp" />
     <ClCompile Include="src\Utils\ProductTableUtils\ProductUtils.cpp" />
     <ClCompile Include="src\Utils\ProductTableUtils\TableUtils.cpp" />
@@ -113,9 +115,10 @@
     <ClCompile Include="src\Utils\IOStreamUtils\ClearingInvalidStream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Algorithms\Join.h" />
+    <ClInclude Include="src\DataAccess\FileFormats\Formats.h" />
     <ClInclude Include="src\DataAccess\InMemoryStorage.h" />
-    <ClInclude Include="src\ErrorHandling.h" />
-    <ClInclude Include="src\DataAccess\FileSystem.h" />
+    <ClInclude Include="src\DataAccess\File.h" />
     <ClInclude Include="src\ErrorHandling\ProductAttributeValidators\Validators.h" />
     <ClInclude Include="src\Product.h" />
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.h" />
@@ -127,6 +130,7 @@
     <ClInclude Include="src\UserInteraction\UserOptions\DisplayOptions.h" />
     <ClInclude Include="src\UserInteraction\UserOptions\Options.h" />
     <ClInclude Include="src\Utils\ConstantVariableUtils\ConstantUtils.h" />
+    <ClInclude Include="src\Utils\FileUtils\FileManipulation.h" />
     <ClInclude Include="src\Utils\IOStreamUtils\SettingStreamAlignment.h" />
     <ClInclude Include="src\Utils\ProductTableUtils\ProductUtils.h" />
     <ClInclude Include="src\Utils\ProductTableUtils\TableUtils.h" />

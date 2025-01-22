@@ -1,6 +1,7 @@
+C:\dev\IMS\src\Algorithms\Join.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Join.obj
+C:\dev\IMS\src\DataAccess\FileFormats\Formats.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Formats.obj
 C:\dev\IMS\src\DataAccess\InMemoryStorage.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\InMemoryStorage.obj
-C:\dev\IMS\src\ErrorHandling.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\ErrorHandling.obj
-C:\dev\IMS\src\DataAccess\FileSystem.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\FileSystem.obj
+C:\dev\IMS\src\DataAccess\File.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\File.obj
 C:\dev\IMS\src\ErrorHandling\ProductAttributeValidators\Validators.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Validators.obj
 C:\dev\IMS\src\Main.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Main.obj
 C:\dev\IMS\src\Product.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Product.obj
@@ -13,6 +14,7 @@ C:\dev\IMS\src\UserInteraction\UserInput\PromptOptions.cpp;C:\dev\IMS\bin-int\De
 C:\dev\IMS\src\UserInteraction\UserOptions\DisplayOptions.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\DisplayOptions.obj
 C:\dev\IMS\src\UserInteraction\UserOptions\Options.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\Options.obj
 C:\dev\IMS\src\Utils\ConstantVariableUtils\ConstantUtils.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\ConstantUtils.obj
+C:\dev\IMS\src\Utils\FileUtils\FileManipulation.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\FileManipulation.obj
 C:\dev\IMS\src\Utils\IOStreamUtils\SettingStreamAlignment.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\SettingStreamAlignment.obj
 C:\dev\IMS\src\Utils\ProductTableUtils\ProductUtils.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\ProductUtils.obj
 C:\dev\IMS\src\Utils\ProductTableUtils\TableUtils.cpp;C:\dev\IMS\bin-int\Debug-x64\IMS\TableUtils.obj

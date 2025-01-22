@@ -69,7 +69,7 @@
             return product.calculateInventoryValue() == inventoryValue;
             };
     default:
-        throw std::runtime_error("Unexpected search predicate chosen.");
+        throw std::logic_error("Unexpected search predicate chosen.");
     }
 }
 

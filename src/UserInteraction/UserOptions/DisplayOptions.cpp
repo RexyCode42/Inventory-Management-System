@@ -22,3 +22,13 @@ void UserSelection::displayProductRemoveOptions() {
     std::cout << "1) Yes" << '\n';
     std::cout << "2) No" << '\n';
 }
+
+void UserSelection::displaySaveModeOptions() {
+    std::cout << "1) Save to New File" << '\n';
+    std::cout << "2) Save To Internal File" << '\n';
+}
+
+void UserSelection::displayFileExtensionOptions() {
+    std::cout << "1) Txt Extension" << '\n';
+    std::cout << "2) Csv Extension" << '\n';
+}

@@ -1,41 +1,64 @@
-#include <iostream>
-#include <functional>
-#include <vector>
-#include <unordered_set>
-#include <limits>
-#include <expected>
-#include "Product.h"
 #include "DataAccess/InMemoryStorage.h"
+#include "DataAccess/File.h"
+#include "DataAccess/FileFormats/Formats.h"
 #include "UserInteraction/ProductManagement/ProductSetup.h"
 #include "UserInteraction/ProductManagement/ProductSearch.h"
 // Reintroduce the displayProduct function 
 // once the viewAllProducts function is placed inside its own file
 // #include "UserInteraction/ProductManagement/ProductDisplay.h"
 #include "UserInteraction/UserInput/PromptOptions.h"
-#include "UserInteraction/UserOptions/Options.h"
-#include "UserInteraction/UserOptions/DisplayOptions.h"
 #include "Utils/IOStreamUtils/SettingStreamAlignment.h"
-#include "Utils/IOStreamUtils/ClearingInvalidStream.h"
-#include "Utils/ConstantVariableUtils/ConstantUtils.h"
 #include "Utils/ProductTableUtils/TableUtils.h"
 #include "Utils/ProductTableUtils/ProductUtils.h"
-
-// IMS = Inventory Management System
-//class IUserInteraction {
-//public:
-//	virtual void showMessage(const std::string& message) const = 0;
-//
-//	virtual ~IIMSUserInteraction() = default;
-//};
-//
-//class ConsoleUserInteraction : IIMSUserInteraction {
-//public:
-//	void showMessage(const std::string& message) const override {
-//		std::cout << message << std::endl;
-//	}
-//};
+#include "Utils/FileUtils/FileManipulation.h"
 
 // ===========================================Done=============================================
+
+std::expected<void, std::string> saveProductsToFile(const std::span<const Inventory::Product>& products) {
+    if (products.empty())
+        return std::unexpected("No products available to save to file.");
+
+    constexpr SaveModeOption minSaveMode{ SaveModeOption::SAVE_TO_NEW };
+    constexpr SaveModeOption maxSaveMode{ SaveModeOption::SAVE_TO_INTERNAL };
+    const SaveModeOption saveMode{
+        promptUserForChoice(UserSelection::displaySaveModeOptions, minSaveMode, maxSaveMode)
+    };
+
+    File file{};
+
+    switch (saveMode) {
+    case SaveModeOption::SAVE_TO_NEW:
+    {
+        constexpr FileExtensionOption minFileExtension{ FileExtensionOption::TXT };
+        constexpr FileExtensionOption maxFileExtension{ FileExtensionOption::CSV };
+        const FileExtensionOption fileExtension{
+            promptUserForChoice(UserSelection::displayFileExtensionOptions, minFileExtension, maxFileExtension)
+        };
+
+        const std::filesystem::path filePath{ FileHelpers::getUserFilePath(fileExtension) };
+
+        const std::string contents{
+            StringHelpers::getCollectionAsFormattedString(products, FileHelpers::getFileFormat(fileExtension))
+        };
+
+        auto writeResult{ file.writeAllText(filePath, contents) };
+
+        return writeResult;
+    }
+    case SaveModeOption::SAVE_TO_INTERNAL:
+    {
+        const std::string contents{
+            StringHelpers::getCollectionAsFormattedString(products, CsvProductFormat{})
+        };
+
+        auto writeResult{ file.appendAllText(ConstantHelpers::internalFilePath, contents) };
+
+        return writeResult;
+    }
+    default:
+        throw std::logic_error("Unexpected saving mode chosen.");
+    }
+}
 
 [[nodiscard]] std::expected<void, std::string> updateProduct(Inventory::InMemoryProductStorage& inMemoryProductStorage) {
     if (inMemoryProductStorage.getProducts().empty())
@@ -143,7 +166,7 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
     case DeleteOption::NO:
         return {};
     default:
-        throw std::runtime_error("Unexpected delete option chosen.");
+        throw std::logic_error("Unexpected delete option chosen.");
     }
 }
 
@@ -167,7 +190,7 @@ void searchAndDisplayProducts(const std::span<const Inventory::Product>& product
     displayFoundProducts(foundProducts);
 }
 
-class InventoryManagementSystemApplication {
+class InventoryManagementSystemApp {
 public:
 	void Run();
 
@@ -175,7 +198,7 @@ private:
     Inventory::InMemoryProductStorage inMemoryProductStorage_{};
 };
 
-void InventoryManagementSystemApplication::Run() {
+void InventoryManagementSystemApp::Run() {
 	// addProduct(inMemoryProductStorage_);
 	// addProduct(inMemoryProductStorage_);
 
@@ -184,18 +207,23 @@ void InventoryManagementSystemApplication::Run() {
     inMemoryProductStorage_.add({ "0000AA","carrot","food",0.99,30 });
     inMemoryProductStorage_.add({ "0001AA","apple","food",0.99,30 });
 
-    if (const auto isRemoved{ removeProduct(inMemoryProductStorage_) };
-        !isRemoved.has_value())
-        std::cout << isRemoved.error() << '\n';
-    else
+    if (auto saveResult{ saveProductsToFile(inMemoryProductStorage_.getProducts()) }; saveResult.has_value())
         std::cout << "Success" << '\n';
 
     viewAllProducts(inMemoryProductStorage_.getProducts());
 }
 
 int main() {
-	 InventoryManagementSystemApplication inventoryManagementSystemApp{};
-	 inventoryManagementSystemApp.Run();
+    try {
+        InventoryManagementSystemApp{}.Run();
+    }
+    catch (const std::exception& ex) {
+        std::cout <<
+            "We're sorry, but it seems that the program encountered an unexpected issue. " <<
+            "The program will now close." <<
+            "Error: " <<
+            ex.what();
+    }
 }
 
 

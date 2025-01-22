@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ErrorHandling.h"
+#include <string>
+#include <algorithm>
 
 namespace Inventory {
 	class Product {

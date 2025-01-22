@@ -5,7 +5,7 @@ void StringHelpers::toUpperAll(std::string& str) {
 	std::ranges::transform(str, std::begin(str), toUpper);
 }
 
-void StringHelpers::trimLeft(std::string& str) {
+void StringHelpers::trimLeadingWhitespaces(std::string& str) {
 	if (str.empty())
 		return;
 
@@ -13,7 +13,7 @@ void StringHelpers::trimLeft(std::string& str) {
 	str.erase(std::begin(str), std::ranges::find_if_not(str, isSpace));
 }
 
-void StringHelpers::trimRight(std::string& str) {
+void StringHelpers::trimTrailingWhitespaces(std::string& str) {
 	if (str.empty())
 		return;
 
@@ -40,9 +40,9 @@ void StringHelpers::trimEdgesAndBody(std::string& str) {
 	if (str.empty())
 		return;
 
-	trimLeft(str);
+	trimLeadingWhitespaces(str);
 
-	trimRight(str);
+	trimTrailingWhitespaces(str);
 
 	trimBody(str);
 }

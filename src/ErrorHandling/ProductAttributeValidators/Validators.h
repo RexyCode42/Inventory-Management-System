@@ -5,11 +5,10 @@
 #include <algorithm>
 #include <ranges>
 #include <unordered_set>
+#include <../src/Utils/ConstantVariableUtils/ConstantUtils.h>
 
-// Ensure that a validator has an isValid function
-// which takes a parameter of type T and returns a bool indicating the validity of the input.
 template<class Validator, typename T>
-concept ValidatorConcept = requires(const Validator & validator, const T& t) {
+concept ValidatorConcept = requires(const Validator& validator, const T& t) {
 	{ validator.isValid(t) } -> std::same_as<bool>;
 };
 
@@ -31,6 +30,29 @@ protected:
 	[[nodiscard]] bool containsSpecialCharacter(std::string_view str) const;
 
 	[[nodiscard]] bool containsNoSpecialCharacters(std::string_view str) const;
+};
+
+class FileNameValidator : public StringValidator {
+public:
+	[[nodiscard]] bool isValid(std::string_view fileName) const;
+
+	[[nodiscard]] std::size_t getMinLength() const noexcept;
+
+	[[nodiscard]] std::size_t getMaxLength() const noexcept;
+
+private:
+	// Windows file name rules: https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+
+	[[nodiscard]] bool containsReservedCharacters(std::string_view fileName) const noexcept;
+
+	[[nodiscard]] bool containsReservedNames(std::string_view fileName) const noexcept;
+
+	[[nodiscard]] bool containsNonPrintableCharacters(std::string_view fileName) const noexcept;
+
+	[[nodiscard]] bool isInternalFileNameSameAs(std::string_view fileName) const noexcept;
+
+	static constexpr std::size_t minLength_{ 1 };
+	static constexpr std::size_t maxLength_{ ConstantHelpers::maxPathLength };
 };
 
 class IdValidator : public StringValidator {

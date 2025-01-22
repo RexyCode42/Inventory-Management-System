@@ -52,6 +52,42 @@
 	return !std::ranges::any_of(str, isSpecialCharacter);
 }
 
+[[nodiscard]] bool FileNameValidator::isValid(std::string_view fileName) const {
+	return
+		hasValidLength(fileName, minLength_, maxLength_) &&
+		!containsReservedCharacters(fileName) &&
+		!containsReservedNames(fileName) &&
+		!containsNonPrintableCharacters(fileName) &&
+		!isInternalFileNameSameAs(fileName);
+}
+
+[[nodiscard]] std::size_t FileNameValidator::getMinLength() const noexcept {
+	return minLength_;
+}
+
+[[nodiscard]] std::size_t FileNameValidator::getMaxLength() const noexcept {
+	return maxLength_;
+}
+
+[[nodiscard]] bool FileNameValidator::containsReservedCharacters(std::string_view fileName) const noexcept {
+	return std::ranges::any_of(fileName, 
+		[](unsigned char ch) { return ConstantHelpers::reservedCharacters.contains(ch); });
+}
+
+[[nodiscard]] bool FileNameValidator::containsReservedNames(std::string_view fileName) const noexcept {
+	return ConstantHelpers::reservedNames.contains(fileName.data());
+}
+
+[[nodiscard]] bool FileNameValidator::containsNonPrintableCharacters(std::string_view fileName) const noexcept {
+	return std::ranges::any_of(fileName, 
+		[maxAsciiControlCharacter = 31, deleteControlCharacter = 127](unsigned char ch) { 
+			return ch <= maxAsciiControlCharacter || ch == deleteControlCharacter; });
+}
+
+[[nodiscard]] bool FileNameValidator::isInternalFileNameSameAs(std::string_view fileName) const noexcept {
+	return fileName == ConstantHelpers::internalFilePath.filename();
+}
+
 [[nodiscard]] bool IdValidator::isValid(std::string_view id) const {
 	constexpr std::size_t minDigitFrequency{ minLength_ - 2 };
 	constexpr std::size_t minLetterFrequency{ minLength_ - 4 };

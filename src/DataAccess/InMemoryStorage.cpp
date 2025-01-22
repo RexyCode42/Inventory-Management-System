@@ -83,7 +83,7 @@ void InMemoryProductStorage::remove(const Product& product) {
 	}
 		break;
 	default: {
-		throw std::runtime_error("Unexpected update option chosen.");
+		throw std::logic_error("Unexpected update option chosen.");
 	}
 	}
 

@@ -8,4 +8,8 @@ namespace UserSelection {
     void displayProductUpdateOptions();
 
     void displayProductRemoveOptions();
+
+    void displaySaveModeOptions();
+
+    void displayFileExtensionOptions();
 }
