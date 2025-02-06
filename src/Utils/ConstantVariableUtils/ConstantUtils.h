@@ -5,7 +5,9 @@
 #include <unordered_set>
 
 namespace ConstantHelpers {
-    constexpr std::size_t countOfColumns{ 6 };
+    constexpr std::size_t columnSize{ 6 };
+
+    constexpr char internalFileDelimiter{ ',' };
 
     const std::filesystem::path internalFilePath{ "inventory.csv" };
 

@@ -31,3 +31,8 @@ enum class FileExtensionOption : int {
     TXT = 1,
     CSV
 };
+
+enum class LoadModeOption : int {
+    LOAD_FROM_EXTERNAL = 1,
+    LOAD_FROM_INTERNAL
+};

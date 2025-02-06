@@ -1,5 +1,6 @@
 #include "DataAccess/InMemoryStorage.h"
 #include "DataAccess/File.h"
+#include "DataAccess/Process.h"
 #include "DataAccess/FileFormats/Formats.h"
 #include "UserInteraction/ProductManagement/ProductSetup.h"
 #include "UserInteraction/ProductManagement/ProductSearch.h"
@@ -8,13 +9,55 @@
 // #include "UserInteraction/ProductManagement/ProductDisplay.h"
 #include "UserInteraction/UserInput/PromptOptions.h"
 #include "Utils/IOStreamUtils/SettingStreamAlignment.h"
+#include "Utils/ConstantVariableUtils/ConstantUtils.h"
 #include "Utils/ProductTableUtils/TableUtils.h"
 #include "Utils/ProductTableUtils/ProductUtils.h"
 #include "Utils/FileUtils/FileManipulation.h"
 
-// ===========================================Done=============================================
+[[nodiscard]] std::expected<std::vector<Inventory::Product>, std::string> loadFromExternal() {
+    const std::filesystem::path filePath{ FileHelpers::getUserFilePath() };
 
-std::expected<void, std::string> saveProductsToFile(const std::span<const Inventory::Product>& products) {
+    auto readResult{ File{}.readAllLines(filePath) };
+
+    if (!readResult.has_value())
+        return std::unexpected(readResult.error());
+
+    auto delimiterOpt{ FileHelpers::getDelimiterFromExtension(filePath) };
+
+    if (!delimiterOpt.has_value())
+        return std::unexpected("Could not determine delimiter for file extension: \"" +
+            filePath.extension().generic_string() + "\".");
+
+    return process(readResult.value(), delimiterOpt.value());
+}
+
+[[nodiscard]] std::expected<std::vector<Inventory::Product>, std::string> loadFromInternal() {
+    auto readResult{ File{}.readAllLines(ConstantHelpers::internalFilePath) };
+
+    if (!readResult.has_value())
+        return std::unexpected(readResult.error());
+
+    return process(readResult.value(), ConstantHelpers::internalFileDelimiter);
+}
+
+[[nodiscard]] std::expected<std::vector<Inventory::Product>, std::string> loadProductsFromFile() {
+    constexpr LoadModeOption minLoadMode{ LoadModeOption::LOAD_FROM_EXTERNAL };
+    constexpr LoadModeOption maxLoadMode{ LoadModeOption::LOAD_FROM_INTERNAL };
+    const LoadModeOption loadMode{
+        promptUserForChoice(UserSelection::displayLoadModeOptions, minLoadMode, maxLoadMode)
+    };
+
+    switch (loadMode) {
+    case LoadModeOption::LOAD_FROM_EXTERNAL:
+        return loadFromExternal();
+    case LoadModeOption::LOAD_FROM_INTERNAL:
+        return loadFromInternal();
+    [[unlikely]] default:
+        throw std::logic_error("Unexpected loading mode chosen.");
+    }
+}
+
+[[nodiscard]] std::expected<void, std::string> saveProductsToFile(const std::span<const Inventory::Product>& products) {
     if (products.empty())
         return std::unexpected("No products available to save to file.");
 
@@ -23,8 +66,6 @@ std::expected<void, std::string> saveProductsToFile(const std::span<const Invent
     const SaveModeOption saveMode{
         promptUserForChoice(UserSelection::displaySaveModeOptions, minSaveMode, maxSaveMode)
     };
-
-    File file{};
 
     switch (saveMode) {
     case SaveModeOption::SAVE_TO_NEW:
@@ -41,7 +82,7 @@ std::expected<void, std::string> saveProductsToFile(const std::span<const Invent
             StringHelpers::getCollectionAsFormattedString(products, FileHelpers::getFileFormat(fileExtension))
         };
 
-        auto writeResult{ file.writeAllText(filePath, contents) };
+        auto writeResult{ File{}.writeAllText(filePath, contents) };
 
         return writeResult;
     }
@@ -51,11 +92,11 @@ std::expected<void, std::string> saveProductsToFile(const std::span<const Invent
             StringHelpers::getCollectionAsFormattedString(products, CsvProductFormat{})
         };
 
-        auto writeResult{ file.appendAllText(ConstantHelpers::internalFilePath, contents) };
+        auto writeResult{ File{}.appendAllText(ConstantHelpers::internalFilePath, contents) };
 
         return writeResult;
     }
-    default:
+    [[unlikely]] default:
         throw std::logic_error("Unexpected saving mode chosen.");
     }
 }
@@ -112,7 +153,7 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
         return;
     }
 
-    constexpr std::array<std::string_view, ConstantHelpers::countOfColumns> tableHeader{
+    constexpr std::array<std::string_view, ConstantHelpers::columnSize> tableHeader{
         "ID", "NAME", "CATEGORY", "PRICE", "STOCK", "INVENTORY VALUE"
     };
 
@@ -165,7 +206,7 @@ void viewAllProducts(const std::span<const Inventory::Product>& products) {
         return {};
     case DeleteOption::NO:
         return {};
-    default:
+    [[unlikely]] default:
         throw std::logic_error("Unexpected delete option chosen.");
     }
 }

@@ -2,7 +2,7 @@
 
 #include "../src/Utils/StringUtils/StringFormatting.h"
 #include "../src/Utils/IOStreamUtils/ClearingInvalidStream.h"
-#include "../src/ErrorHandling/ProductAttributeValidators/Validators.h"
+#include "../src/ErrorHandling/Validators.h"
 #include "../ProductAttributeRequirements/RequirementsPrinter.h"
 
 template<typename T>

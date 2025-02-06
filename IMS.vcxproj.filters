@@ -27,7 +27,7 @@
     <ClCompile Include="src\Utils\StringUtils\StringFormatting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ErrorHandling\ProductAttributeValidators\Validators.cpp">
+    <ClCompile Include="src\ErrorHandling\Validators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\Requirements.cpp">
@@ -84,6 +84,9 @@
     <ClCompile Include="src\Utils\FileUtils\FileManipulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataAccess\Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Product.h">
@@ -95,7 +98,7 @@
     <ClInclude Include="src\Utils\StringUtils\StringFormatting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ErrorHandling\ProductAttributeValidators\Validators.h">
+    <ClInclude Include="src\ErrorHandling\Validators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DataAccess\InMemoryStorage.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\FileUtils\FileManipulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataAccess\Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

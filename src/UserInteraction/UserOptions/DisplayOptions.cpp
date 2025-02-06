@@ -25,10 +25,15 @@ void UserSelection::displayProductRemoveOptions() {
 
 void UserSelection::displaySaveModeOptions() {
     std::cout << "1) Save to New File" << '\n';
-    std::cout << "2) Save To Internal File" << '\n';
+    std::cout << "2) Save to Internal File" << '\n';
 }
 
 void UserSelection::displayFileExtensionOptions() {
     std::cout << "1) Txt Extension" << '\n';
     std::cout << "2) Csv Extension" << '\n';
+}
+
+void UserSelection::displayLoadModeOptions() {
+    std::cout << "1) Load from External File" << '\n';
+    std::cout << "2) Load from Internal File" << '\n';
 }

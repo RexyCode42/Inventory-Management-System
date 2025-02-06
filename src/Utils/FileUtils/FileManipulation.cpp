@@ -7,7 +7,7 @@
     return path;
 }
 
-[[nodiscard]] std::string FileHelpers::getFileExtension(
+[[nodiscard]] std::string FileHelpers::getFileExtensionAsString(
     FileExtensionOption fileExtension) {
     switch (fileExtension) {
     case FileExtensionOption::TXT:
@@ -19,7 +19,7 @@
     }
 }
 
-std::function<std::string(const Inventory::Product&)> FileHelpers::getFileFormat(
+[[nodiscard]] std::function<std::string(const Inventory::Product&)> FileHelpers::getFileFormat(
     FileExtensionOption fileExtension) {
     switch (fileExtension) {
     case FileExtensionOption::TXT:
@@ -31,13 +31,33 @@ std::function<std::string(const Inventory::Product&)> FileHelpers::getFileFormat
     }
 }
 
-[[nodiscard]] std::filesystem::path FileHelpers::getUserFilePath(
-    FileExtensionOption fileExtension) {
+[[nodiscard]] std::filesystem::path FileHelpers::getUserFilePath() {
+    std::string filePath{};
+
+    std::cout << "Enter file path: ";
+    std::getline(std::cin >> std::ws, filePath);
+
+    return filePath;
+}
+
+[[nodiscard]] std::filesystem::path FileHelpers::getUserFilePath(FileExtensionOption fileExtension) {
     const std::string fileName{
         promptUserForAttribute<std::string>(FileNameRequirementsPrinter{}, FileNameValidator{}, "file name")
     };
 
-    const std::string extension{ FileHelpers::getFileExtension(fileExtension) };
+    const std::string extension{ FileHelpers::getFileExtensionAsString(fileExtension) };
 
     return FileHelpers::buildFilePath(fileName, extension);
+}
+
+[[nodiscard]] std::optional<char> FileHelpers::getDelimiterFromExtension(const std::filesystem::path& filePath) {
+    static const std::unordered_map<std::filesystem::path, char> mapExtensionToDelimiter{
+        { ".txt",',' },
+        { ".csv",',' }
+    };
+
+    const auto extension{ filePath.extension() };
+
+    return mapExtensionToDelimiter.contains(extension) ?
+        std::optional{ mapExtensionToDelimiter.at(extension) } : std::nullopt;
 }

@@ -9,9 +9,9 @@
 #include "../ConstantVariableUtils/ConstantUtils.h"
 
 namespace TableHelpers {
-    using Widths = std::array<std::size_t, ConstantHelpers::countOfColumns>;
-    using Row = std::span<const std::array<std::string, ConstantHelpers::countOfColumns>>;
-    using TableHeader = std::span<const std::string_view, ConstantHelpers::countOfColumns>;
+    using Widths = std::array<std::size_t, ConstantHelpers::columnSize>;
+    using Row = std::span<const std::array<std::string, ConstantHelpers::columnSize>>;
+    using TableHeader = std::span<const std::string_view, ConstantHelpers::columnSize>;
 
     Widths calculateColumnWidths(const Row& stringProducts, const TableHeader& tableHeader);
 

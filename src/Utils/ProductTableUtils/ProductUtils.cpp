@@ -5,7 +5,7 @@ ProductHelpers::StringProducts ProductHelpers::convertProductsToStringArrays(con
     stringProducts.reserve(products.size());
 
     std::ranges::for_each(products, [&stringProducts](const Inventory::Product& product) {
-        std::array<std::string, ConstantHelpers::countOfColumns> strProduct{
+        std::array<std::string, ConstantHelpers::columnSize> strProduct{
             product.getId(),
             product.getName(),
             product.getCategory(),

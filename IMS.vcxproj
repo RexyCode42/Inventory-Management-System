@@ -94,7 +94,8 @@
     <ClCompile Include="src\DataAccess\FileFormats\Formats.cpp" />
     <ClCompile Include="src\DataAccess\InMemoryStorage.cpp" />
     <ClCompile Include="src\DataAccess\File.cpp" />
-    <ClCompile Include="src\ErrorHandling\ProductAttributeValidators\Validators.cpp" />
+    <ClCompile Include="src\DataAccess\Process.cpp" />
+    <ClCompile Include="src\ErrorHandling\Validators.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Product.cpp" />
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.cpp" />
@@ -119,7 +120,8 @@
     <ClInclude Include="src\DataAccess\FileFormats\Formats.h" />
     <ClInclude Include="src\DataAccess\InMemoryStorage.h" />
     <ClInclude Include="src\DataAccess\File.h" />
-    <ClInclude Include="src\ErrorHandling\ProductAttributeValidators\Validators.h" />
+    <ClInclude Include="src\DataAccess\Process.h" />
+    <ClInclude Include="src\ErrorHandling\Validators.h" />
     <ClInclude Include="src\Product.h" />
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.h" />
     <ClInclude Include="src\UserInteraction\ProductManagement\ProductDisplay.h" />

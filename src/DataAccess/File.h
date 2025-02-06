@@ -47,6 +47,34 @@ public:
         const std::filesystem::path& filePath,
         const std::string& contents) const;
 
+    /// Opens a text file, reads all the text in the file, and then closes the file.
+    ///
+    /// \param filePath: The path of the file to read from.
+    /// 
+    /// \return std::expected: All the text in the file (std::string).
+    /// \return std::unexpected: File does not exist (std::string).
+    /// \return std::unexpected: File could not be opened (std::string).
+    /// \return std::unexpected: File could not be read from (std::string).
+    /// 
+    /// \exception std::invalid_argument: The path is empty.
+    /// \exception std::invalid_argument: The path is too large.    
+    [[nodiscard]] std::expected<std::string, std::string> readAllText(
+        const std::filesystem::path& filePath) const;
+
+    /// Opens a text file, reads all lines of the file, and then closes the file.
+    ///
+    /// \param filePath: The path of the file to read from.
+    /// 
+    /// \return std::expected: All lines from the file (std::vector<std::string>).
+    /// \return std::unexpected: File does not exist (std::string).
+    /// \return std::unexpected: File could not be opened (std::string).
+    /// \return std::unexpected: File could not be read from (std::string).
+    /// 
+    /// \exception std::invalid_argument: The path is empty.
+    /// \exception std::invalid_argument: The path is too large.    
+    [[nodiscard]] std::expected<std::vector<std::string>, std::string> readAllLines(
+        const std::filesystem::path& filePath) const;
+
 private:
     void validateFilePath(const std::filesystem::path& filePath) const;
 
@@ -54,4 +82,32 @@ private:
         const std::filesystem::path& filePath,
         const std::string& contents,
         std::ofstream::openmode openMode) const;
+
+    template<class Result, typename Function>
+        requires std::is_invocable_r_v<Result, Function, std::ifstream&>
+    [[nodiscard]] std::expected<Result, std::string> readFromFile(
+        const std::filesystem::path& filePath,
+        Function&& getContent) const {
+        auto createFilePathMessage{
+            [&filePath]() { return "File: \"" + filePath.string() + "\""; }
+        };
+
+        if (!std::filesystem::exists(filePath))
+            return std::unexpected(createFilePathMessage() + " does not exist.");
+
+        if (std::filesystem::is_empty(filePath))
+            return std::unexpected(createFilePathMessage() + " is empty.");
+
+        std::ifstream file(filePath, std::ios::in);
+
+        if (!file.is_open())
+            return std::unexpected(createFilePathMessage() + " could not be opened.");
+
+        Result contents{ std::forward<Function>(getContent)(file) };
+
+        if (file.bad())
+            return std::unexpected(createFilePathMessage() + " could not be read.");
+
+        return contents;
+    }
 };

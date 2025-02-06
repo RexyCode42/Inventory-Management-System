@@ -12,4 +12,6 @@ namespace UserSelection {
     void displaySaveModeOptions();
 
     void displayFileExtensionOptions();
+
+    void displayLoadModeOptions();
 }

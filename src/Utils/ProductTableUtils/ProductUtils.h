@@ -9,7 +9,7 @@
 #include "../ConstantVariableUtils/ConstantUtils.h"
 
 namespace ProductHelpers {
-    using StringProducts = std::vector<std::array<std::string, ConstantHelpers::countOfColumns>>;
+    using StringProducts = std::vector<std::array<std::string, ConstantHelpers::columnSize>>;
 
     StringProducts convertProductsToStringArrays(const std::span<const Inventory::Product>& products);
 }

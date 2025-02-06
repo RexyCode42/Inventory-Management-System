@@ -1,6 +1,6 @@
 #pragma once
 
-#include <../src/ErrorHandling/ProductAttributeValidators/Validators.h>
+#include <../src/ErrorHandling/Validators.h>
 
 // Ensure that an attribute requirements printer has a print function
 // that takes an attribute validator as a parameter and throws no exceptions.

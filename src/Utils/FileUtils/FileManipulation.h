@@ -13,12 +13,15 @@ namespace FileHelpers {
     [[nodiscard]] std::filesystem::path buildFilePath(
         const std::string& fileName, const std::string& extension);
 
-    [[nodiscard]] std::string getFileExtension(
+    [[nodiscard]] std::string getFileExtensionAsString(
         FileExtensionOption fileExtension);
 
-    std::function<std::string(const Inventory::Product&)> getFileFormat(
+    [[nodiscard]] std::function<std::string(const Inventory::Product&)> getFileFormat(
         FileExtensionOption fileExtension);
 
-    [[nodiscard]] std::filesystem::path getUserFilePath(
-        FileExtensionOption fileExtension);
+    [[nodiscard]] std::filesystem::path getUserFilePath();
+
+    [[nodiscard]] std::filesystem::path getUserFilePath(FileExtensionOption fileExtension);
+
+    [[nodiscard]] std::optional<char> getDelimiterFromExtension(const std::filesystem::path& filePath);
 }
