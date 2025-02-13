@@ -1,6 +1,6 @@
 #pragma once
 
-#include <../src/ErrorHandling/Validators.h>
+#include "../../ErrorHandling/Validators.h"
 
 // Ensure that an attribute requirements printer has a print function
 // that takes an attribute validator as a parameter and throws no exceptions.
@@ -11,7 +11,7 @@ concept RequirementsPrinterConcept = requires(const Printer & printer, const Val
 
 template<typename T, ValidatorConcept<T> Validator>
 void printAttributeRequirements(
-	RequirementsPrinterConcept<Validator> auto printer,
+	const RequirementsPrinterConcept<Validator> auto& printer,
 	const Validator& validator) {
 	printer.print(validator);
 }

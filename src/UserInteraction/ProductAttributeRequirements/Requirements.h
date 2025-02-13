@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include <../src/ErrorHandling/Validators.h>
-#include <../src/Utils/ConstantVariableUtils/ConstantUtils.h>
-#include <../src/Algorithms/Join.h>
+#include "../../ErrorHandling/Validators.h"
+#include "../../Utils/ConstantVariableUtils/ConstantUtils.h"
+#include "../../Algorithms/Join.h"
 
 class IdRequirementsPrinter {
 public:

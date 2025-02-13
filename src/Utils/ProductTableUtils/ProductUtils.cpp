@@ -1,6 +1,6 @@
 #include "ProductUtils.h"
 
-ProductHelpers::StringProducts ProductHelpers::convertProductsToStringArrays(const std::span<const Inventory::Product>& products) {
+ProductHelpers::StringProducts ProductHelpers::productsAsStrings(const std::span<const Inventory::Product>& products) {
     StringProducts stringProducts;
     stringProducts.reserve(products.size());
 

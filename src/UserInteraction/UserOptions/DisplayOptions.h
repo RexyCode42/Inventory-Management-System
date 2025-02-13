@@ -14,4 +14,6 @@ namespace UserSelection {
     void displayFileExtensionOptions();
 
     void displayLoadModeOptions();
+
+    void displayInventoryOptions();
 }

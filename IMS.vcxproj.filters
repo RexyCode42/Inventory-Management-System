@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Product.cpp">
+    <ClCompile Include="src\Model\Product.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DataAccess\File.cpp">
@@ -42,7 +42,7 @@
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductSetup.cpp">
+    <ClCompile Include="src\UserInteraction\ProductSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Utils\IOStreamUtils\SettingStreamAlignment.cpp">
@@ -66,16 +66,13 @@
     <ClCompile Include="src\UserInteraction\UserOptions\DisplayOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductDisplay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductSearch.cpp">
+    <ClCompile Include="src\UserInteraction\ProductSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DataAccess\InMemoryStorage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataAccess\FileFormats\Formats.cpp">
+    <ClCompile Include="src\DataAccess\Formats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Algorithms\Join.cpp">
@@ -87,9 +84,15 @@
     <ClCompile Include="src\DataAccess\Process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\UserInteraction\ProductManagement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\App\InventoryManagementSystemApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Product.h">
+    <ClInclude Include="src\Model\Product.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DataAccess\File.h">
@@ -116,7 +119,7 @@
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductSetup.h">
+    <ClInclude Include="src\UserInteraction\ProductSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\IOStreamUtils\SettingStreamAlignment.h">
@@ -140,13 +143,10 @@
     <ClInclude Include="src\UserInteraction\UserOptions\DisplayOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductDisplay.h">
+    <ClInclude Include="src\UserInteraction\ProductSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductSearch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DataAccess\FileFormats\Formats.h">
+    <ClInclude Include="src\DataAccess\Formats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Algorithms\Join.h">
@@ -156,6 +156,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DataAccess\Process.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInteraction\ProductManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\App\InventoryManagementSystemApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

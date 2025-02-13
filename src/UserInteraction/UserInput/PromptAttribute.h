@@ -34,7 +34,7 @@ T prompt(std::string_view attributeName) {
 
 template<typename T, ValidatorConcept<T> AttributeValidator>
 T promptUserForAttribute(
-	RequirementsPrinterConcept<AttributeValidator> auto printer,
+	const RequirementsPrinterConcept<AttributeValidator> auto& printer,
 	const AttributeValidator& attributeValidator,
 	std::string_view attributeName) {
 	T attribute{};

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sstream>
-#include "../src/Product.h"
+#include "../Model/Product.h"
 
 class TxtProductFormat {
 public:

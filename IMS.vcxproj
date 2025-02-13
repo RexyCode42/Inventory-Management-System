@@ -91,17 +91,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Algorithms\Join.cpp" />
-    <ClCompile Include="src\DataAccess\FileFormats\Formats.cpp" />
+    <ClCompile Include="src\App\InventoryManagementSystemApp.cpp" />
+    <ClCompile Include="src\DataAccess\Formats.cpp" />
     <ClCompile Include="src\DataAccess\InMemoryStorage.cpp" />
     <ClCompile Include="src\DataAccess\File.cpp" />
     <ClCompile Include="src\DataAccess\Process.cpp" />
     <ClCompile Include="src\ErrorHandling\Validators.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Product.cpp" />
+    <ClCompile Include="src\Model\Product.cpp" />
     <ClCompile Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.cpp" />
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductDisplay.cpp" />
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductSearch.cpp" />
-    <ClCompile Include="src\UserInteraction\ProductManagement\ProductSetup.cpp" />
+    <ClCompile Include="src\UserInteraction\ProductManagement.cpp" />
+    <ClCompile Include="src\UserInteraction\ProductSearch.cpp" />
+    <ClCompile Include="src\UserInteraction\ProductSetup.cpp" />
     <ClCompile Include="src\UserInteraction\UserInput\PromptAttribute.cpp" />
     <ClCompile Include="src\UserInteraction\UserInput\PromptOptions.cpp" />
     <ClCompile Include="src\UserInteraction\UserOptions\DisplayOptions.cpp" />
@@ -117,16 +118,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Algorithms\Join.h" />
-    <ClInclude Include="src\DataAccess\FileFormats\Formats.h" />
+    <ClInclude Include="src\App\InventoryManagementSystemApp.h" />
+    <ClInclude Include="src\DataAccess\Formats.h" />
     <ClInclude Include="src\DataAccess\InMemoryStorage.h" />
     <ClInclude Include="src\DataAccess\File.h" />
     <ClInclude Include="src\DataAccess\Process.h" />
     <ClInclude Include="src\ErrorHandling\Validators.h" />
-    <ClInclude Include="src\Product.h" />
+    <ClInclude Include="src\Model\Product.h" />
     <ClInclude Include="src\UserInteraction\ProductAttributeRequirements\RequirementsPrinter.h" />
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductDisplay.h" />
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductSearch.h" />
-    <ClInclude Include="src\UserInteraction\ProductManagement\ProductSetup.h" />
+    <ClInclude Include="src\UserInteraction\ProductManagement.h" />
+    <ClInclude Include="src\UserInteraction\ProductSearch.h" />
+    <ClInclude Include="src\UserInteraction\ProductSetup.h" />
     <ClInclude Include="src\UserInteraction\UserInput\PromptAttribute.h" />
     <ClInclude Include="src\UserInteraction\UserInput\PromptOptions.h" />
     <ClInclude Include="src\UserInteraction\UserOptions\DisplayOptions.h" />

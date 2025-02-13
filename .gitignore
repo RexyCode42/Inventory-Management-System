@@ -1,9 +1,15 @@
+# Ignore Visual Studio project and solution files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
 # Ignore Visual Studio specific files
 .vs/
 *.user
 *.suo
 
 # Ignore build outputs
+bin-int/
 Debug/
 Release/
 *.obj
@@ -23,4 +29,3 @@ Release/
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
-/src/DataAccess/InMemoryStorage.cpp

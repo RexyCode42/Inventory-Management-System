@@ -1,26 +1,40 @@
 #include "TableUtils.h"
 
-TableHelpers::Widths TableHelpers::calculateColumnWidths(const Row& stringProducts, const TableHeader& tableHeader) {
+TableHelpers::Widths TableHelpers::calculateColumnWidths(
+    const TableHelpers::Table& table, const TableHelpers::Header& header) {
     Widths widths{};
 
-    auto setWidthToDefaultLength{ [](std::string_view header) { return header.length(); } };
-    std::ranges::transform(tableHeader, std::begin(widths), setWidthToDefaultLength);
+    std::ranges::transform(header, std::begin(widths), [](std::string_view attribute) { return attribute.length(); });
 
-    auto getMaxLength{ [](std::string_view strAttribute, std::size_t width) {
-        return std::max(width, strAttribute.length());
+    auto getMaxLength{ [](std::string_view attribute, std::size_t width) {
+        return std::max(width, attribute.length());
         }
     };
-    auto setWidthToMaxLength{ [&widths, getMaxLength](const auto& strAttributes) {
-        std::transform(std::begin(strAttributes), std::end(strAttributes),
-        std::begin(widths), std::begin(widths), getMaxLength);
+
+    auto setWidthToMaxLength{ [&widths, getMaxLength](const auto& row) {
+        std::transform(std::begin(row), std::end(row), std::begin(widths), std::begin(widths), getMaxLength);
         }
     };
-    std::ranges::for_each(stringProducts, setWidthToMaxLength);
+
+    std::ranges::for_each(table, setWidthToMaxLength);
 
     return widths;
 }
 
-void TableHelpers::printRowBorder(const Widths& widths) {
+static void printRowValues(const std::span<const std::string>& row, const TableHelpers::Widths& widths) {
+    std::cout << "|";
+
+    auto setWidthAndPrintValue{ [&widths, index = 0](std::string_view value) mutable {
+        std::cout << " " << std::setw(widths[index++]) << value << " |";
+        }
+    };
+
+    std::ranges::for_each(row, setWidthAndPrintValue);
+
+    std::cout << '\n';
+};
+
+static void printRowBorder(const TableHelpers::Widths& widths) {
     constexpr std::size_t margin{ 1 };
 
     std::cout << '+' << std::setfill('-');
@@ -29,20 +43,21 @@ void TableHelpers::printRowBorder(const Widths& widths) {
         std::cout << std::setw(width + margin * 2) << '-' << '+';
         }
     };
+
     std::ranges::for_each(widths, setBorderWidth);
 
     std::cout << '\n' << std::setfill(' ');
 };
 
-void TableHelpers::printTableHeader(const TableHeader& tableHeader, const Widths& widths) {
+void TableHelpers::printHeader(const TableHelpers::Header& header, const TableHelpers::Widths& widths) {
     printRowBorder(widths);
-    printRowValues(tableHeader, widths);
+    printRowValues(header, widths);
     printRowBorder(widths);
 }
 
-void TableHelpers::printTableValues(const Row& productsAsStrings, const Widths& widths) {
-    std::ranges::for_each(productsAsStrings, [&widths](const auto& productAsStrings) {
-        printRowValues(productAsStrings, widths);
+void TableHelpers::printValues(const TableHelpers::Table& table, const TableHelpers::Widths& widths) {
+    std::ranges::for_each(table, [&widths](const auto& row) {
+        printRowValues(row, widths);
         }
     );
     printRowBorder(widths);

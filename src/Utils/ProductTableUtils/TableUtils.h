@@ -10,28 +10,12 @@
 
 namespace TableHelpers {
     using Widths = std::array<std::size_t, ConstantHelpers::columnSize>;
-    using Row = std::span<const std::array<std::string, ConstantHelpers::columnSize>>;
-    using TableHeader = std::span<const std::string_view, ConstantHelpers::columnSize>;
+    using Table = std::span<const std::array<std::string, ConstantHelpers::columnSize>>;
+    using Header = std::span<const std::string, ConstantHelpers::columnSize>;
 
-    Widths calculateColumnWidths(const Row& stringProducts, const TableHeader& tableHeader);
+    Widths calculateColumnWidths(const Table& table, const Header& header);
 
-    template<typename T>
-    concept StringConvertable = std::convertible_to<std::ranges::range_value_t<T>, std::string_view>;
+    void printHeader(const Header& header, const Widths& widths);
 
-    template<StringConvertable Container>
-    void printRowValues(const Container& row, const Widths& widths) {
-        std::cout << "|";
-        auto setWidthAndPrintValue{ [&widths, index = 0](std::string_view value) mutable {
-            std::cout << " " << std::setw(widths[index++]) << value << " |";
-            }
-        };
-        std::ranges::for_each(row, setWidthAndPrintValue);
-        std::cout << '\n';
-    };
-
-    void printRowBorder(const Widths& widths);
-
-    void printTableHeader(const TableHeader& tableHeader, const Widths& widths);
-
-    void printTableValues(const Row& productsAsStrings, const Widths& widths);
+    void printValues(const Table& table, const Widths& widths);
 }

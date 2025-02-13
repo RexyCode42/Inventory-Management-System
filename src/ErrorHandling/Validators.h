@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <ranges>
 #include <unordered_set>
-#include <../src/Utils/ConstantVariableUtils/ConstantUtils.h>
+#include "../Utils/ConstantVariableUtils/ConstantUtils.h"
 
 template<class Validator, typename T>
 concept ValidatorConcept = requires(const Validator& validator, const T& t) {

@@ -2,13 +2,13 @@
 
 #include <functional>
 #include <string>
-#include "../UserInput/PromptAttribute.h"
-#include "../src/Product.h"
-#include "../ProductAttributeRequirements/Requirements.h"
-#include "../ProductAttributeRequirements/RequirementsPrinter.h"
-#include "../UserOptions/Options.h"
-#include "../UserOptions/DisplayOptions.h"
-#include "../UserInput/PromptOptions.h"
+#include "../src/Model/Product.h"
+#include "ProductAttributeRequirements/Requirements.h"
+#include "ProductAttributeRequirements/RequirementsPrinter.h"
+#include "UserOptions/Options.h"
+#include "UserOptions/DisplayOptions.h"
+#include "UserInput/PromptOptions.h"
+#include "UserInput/PromptAttribute.h"
 
 [[nodiscard]] std::function<bool(const Inventory::Product&)> getProductSearchPredicate();
 

@@ -24,7 +24,7 @@ void UserSelection::displayProductRemoveOptions() {
 }
 
 void UserSelection::displaySaveModeOptions() {
-    std::cout << "1) Save to New File" << '\n';
+    std::cout << "1) Save to External File" << '\n';
     std::cout << "2) Save to Internal File" << '\n';
 }
 
@@ -36,4 +36,14 @@ void UserSelection::displayFileExtensionOptions() {
 void UserSelection::displayLoadModeOptions() {
     std::cout << "1) Load from External File" << '\n';
     std::cout << "2) Load from Internal File" << '\n';
+}
+
+void UserSelection::displayInventoryOptions() {
+    std::cout << "1) Add Product" << '\n';
+    std::cout << "2) Remove Product" << '\n';
+    std::cout << "3) Update Product" << '\n';
+    std::cout << "4) Search for Product(s)" << '\n';
+    std::cout << "5) View all Products" << '\n';
+    std::cout << "6) Save Products to File" << '\n';
+    std::cout << "7) Exit" << '\n';
 }

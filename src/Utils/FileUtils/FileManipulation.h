@@ -3,11 +3,11 @@
 #include <filesystem>
 #include <string>
 #include <functional>
-#include "../src/Product.h"
-#include "../src/DataAccess/FileFormats/Formats.h"
-#include "../src/UserInteraction/UserOptions/Options.h"
-#include "../src/UserInteraction/ProductAttributeRequirements/Requirements.h"
-#include "../src/UserInteraction/UserInput/PromptAttribute.h"
+#include "../../Model/Product.h"
+#include "../../DataAccess/Formats.h"
+#include "../../UserInteraction/UserOptions/Options.h"
+#include "../../UserInteraction/ProductAttributeRequirements/Requirements.h"
+#include "../../UserInteraction/UserInput/PromptAttribute.h"
 
 namespace FileHelpers {
     [[nodiscard]] std::filesystem::path buildFilePath(
